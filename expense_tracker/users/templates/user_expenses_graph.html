@@ -1,0 +1,10 @@
+{% extends 'base1.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Monthly Expenses for {{ user.username }}</h2>
+    <div class="mt-4">
+        {{ graph_div|safe }}
+    </div>
+    <a href="{% url 'user_report' %}" class="btn btn-secondary mt-3">Back to User Report</a>
+</div>
+{% endblock %}
