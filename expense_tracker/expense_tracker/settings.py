@@ -28,7 +28,7 @@ DEBUG = os.environ.get("DEBUG", "False").lower=="true"
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
-#vdbdb
+#vdbdbgsdgsr
 
 # Application definition
 REST_FRAMEWORK = {
