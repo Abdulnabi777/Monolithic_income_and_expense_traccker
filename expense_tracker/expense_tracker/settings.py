@@ -12,9 +12,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import dj_database_url
 from pathlib import Path
 import os
-
+import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,11 +28,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY =  os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower=="true"
+DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
 
-#vdbdbgsdgsrfdhn
 
 # Application definition
 REST_FRAMEWORK = {
@@ -63,7 +66,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhitenoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -96,19 +98,13 @@ WSGI_APPLICATION = 'expense_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
-database_url = os.environ.get("DATABASE_URL")
-DATABASES = {
-    "default": dj_database_url.parse( database_url)
-}
 
 # DATABASES = {
 #     'default': {
@@ -121,7 +117,9 @@ DATABASES = {
 #     }
 # }
 
-# postgresql://income_expense_tracker_gyyy_user:vY1lzq3oGt9PaoejYa0c1pMdsYHsYQAo@dpg-cub27iggph6c73a2sekg-a.oregon-postgres.render.com/income_expense_tracker_gyyy
+DATABASES ={
+    'default': dj_database_url.parse(env('DATABASE_URL'))
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -158,15 +156,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT =  BASE_DIR / "expense_tracker/static"
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestSta"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# STATICFILES_DIRS = [
-#     BASE_DIR / "expense_tracker/static",
-#     # Add any other directories where you store static files
-# ]
+STATICFILES_DIRS = [
+    BASE_DIR / "expense_tracker/static",
+    # Add any other directories where you store static files
+]
