@@ -1,5 +1,6 @@
 from pathlib import Path
 import dj_database_url
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -8,12 +9,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*ep3fwilxz+zs)3bgao@ed5yj$456%3o8g%@pj7s6*i!$$bh3w'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG","FALSE").lower=="True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -83,8 +84,9 @@ WSGI_APPLICATION = 'expense_tracker.wsgi.application'
 #     }
 # }
 
+database_url = os.environ.get("DATABASE_URL")
 DATABASES = {
-    'default': dj_database_url.parse("postgresql://income_expense_tracker_gyyy_user:vY1lzq3oGt9PaoejYa0c1pMdsYHsYQAo@dpg-cub27iggph6c73a2sekg-a.oregon-postgres.render.com/income_expense_tracker_gyyy")
+    'default': dj_database_url.parse(database_url)
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
