@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -72,15 +72,19 @@ WSGI_APPLICATION = 'expense_tracker.wsgi.application'
  
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'expense_db',
+#         'USER': 'postgres',
+#         'PASSWORD': 'abdul',
+#         'PORT': '5432',
+#         'HOST': 'localhost'
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'expense_db',
-        'USER': 'postgres',
-        'PASSWORD': 'abdul',
-        'PORT': '5432',
-        'HOST': 'localhost'
-    }
+    'default': dj_database_url.parse("postgresql://income_expense_tracker_gyyy_user:vY1lzq3oGt9PaoejYa0c1pMdsYHsYQAo@dpg-cub27iggph6c73a2sekg-a.oregon-postgres.render.com/income_expense_tracker_gyyy")
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
