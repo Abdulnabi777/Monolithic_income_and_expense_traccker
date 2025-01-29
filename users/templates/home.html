@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}  <!-- This line loads the static files tag -->
+
+{% block title %}Home - Expense Tracker{% endblock %}
+
+{% block content %}
+    <div class="container text-center my-5">
+        <h1 class="display-4 mb-4">Track Your Expenses Effectively</h1>
+        <p class="lead text-muted mb-4">Take control of your finances by managing your expenses easily. Stay on top of your budget and reach your financial goals!</p>
+
+        <div class="row">
+            <!-- Card 1: Add Expense -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg border-light rounded">
+                    <img src="{% static 'images/expense1.webp' %}" class="card-img-top" alt="Add Expense">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Your Expenses</h5>
+                        <p class="card-text">Quickly add your expenses and stay on top of your budget. Every little expense matters!</p>
+                        <a href="{% url 'add_expense' %}" class="btn btn-primary">Add Expense</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: View Expenses -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg border-light rounded">
+                    <img src="{% static 'images/expense-tracking.webp' %}" class="card-img-top" alt="View Expenses">
+                    <div class="card-body">
+                        <h5 class="card-title">View Your Expenses</h5>
+                        <p class="card-text">Review your expenses and understand where your money goes. Track your spending  accordingly.</p>
+                        <a href="{% url 'view_expenses' %}" class="btn btn-secondary">View Expenses</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Budget Insights -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg border-light rounded">
+                    <img src="{% static 'images/file.png' %}" class="card-img-top" alt="Budget Insights">
+                    <div class="card-body">
+                        <h5 class="card-title">Budget Insights</h5>
+                        <p class="card-text">Get personalized insights into your spending patterns and manage your budget more efficiently.</p>
+                        <a href="{% url 'report' %}"class="btn btn-success">Get Insights</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call-to-action -->
+        <div class="mt-5">
+            <h3 class="mb-4">Ready to start tracking your expenses?</h3>
+            <a href="{% url 'add_income' %}" class="btn btn-danger btn-lg">Get Started Now</a>
+        </div>
+    </div>
+{% endblock %}
