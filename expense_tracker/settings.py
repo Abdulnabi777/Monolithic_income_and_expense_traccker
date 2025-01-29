@@ -149,3 +149,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # WSGI APPLICATION
 WSGI_APPLICATION = 'expense_tracker.wsgi.application'
+
+#dbd
