@@ -9,12 +9,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'django-insecure-*ep3fwilxz+zs)3bgao@ed5yj$456%3o8g%@pj7s6*i!$$bh3w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "FALSE").lower() == "true"
+DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
+ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -73,21 +74,21 @@ WSGI_APPLICATION = 'expense_tracker.wsgi.application'
  
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'expense_db',
-#         'USER': 'postgres',
-#         'PASSWORD': 'abdul',
-#         'PORT': '5432',
-#         'HOST': 'localhost'
-#     }
-# }
-
-database_url = os.environ.get("DATABASE_URL")
 DATABASES = {
-    'default': dj_database_url.parse(database_url)
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'tHxJInQGYtJPQfoJsHTFPOjefuNnsAcP',
+        'PORT': '12353',
+        'HOST': 'roundhouse.proxy.rlwy.net'
+    }
 }
+
+# database_url = os.environ.get("DATABASE_URL")
+# DATABASES = {
+#     'default': dj_database_url.parse(database_url)
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -128,3 +129,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_DIRS = os.path.join(BASE_DIR,'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
