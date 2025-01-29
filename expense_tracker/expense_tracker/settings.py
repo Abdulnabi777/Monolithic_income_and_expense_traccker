@@ -77,13 +77,23 @@ WSGI_APPLICATION = 'expense_tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'tHxJInQGYtJPQfoJsHTFPOjefuNnsAcP',
-        'PORT': '12353',
-        'HOST': 'roundhouse.proxy.rlwy.net'
+        'NAME': os.getenv('DB_NAME', 'railway'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'tHxJInQGYtJPQfoJsHTFPOjefuNnsAcP'),
+        'PORT': os.getenv('DB_PORT', '12353'),
+        'HOST': os.getenv('DB_HOST', 'roundhouse.proxy.rlwy.net'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'tHxJInQGYtJPQfoJsHTFPOjefuNnsAcP',
+#         'PORT': '12353',
+#         'HOST': 'roundhouse.proxy.rlwy.net'
+#     }
+# }
 
 # database_url = os.environ.get("DATABASE_URL")
 # DATABASES = {
@@ -123,14 +133,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = "users/images"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = os.path.join(BASE_DIR,'static'),
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
