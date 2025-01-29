@@ -7,6 +7,8 @@ from .apiexpenseview import AddExpenseAPI, ViewExpensesAPI, EditExpenseAPI, Dele
 from .adminviews import  manage_users, edit_user, delete_user, user_expenses_graph, user_report
 from .apiadminviews import ManageUsersAPI, EditUserAPI, DeleteUserAPI
 from .apiincomeviews import AddIncomeAPI, ViewIncomesAPI, EditIncomeAPI, DeleteIncomeAPI
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     # API user view
     path('api/signup/', SignupAPI.as_view(), name='api_signup'),
@@ -62,3 +64,5 @@ urlpatterns = [
     path('api/edit-user/<int:user_id>/', EditUserAPI.as_view(), name='api_edit_user'),
     path('api/delete-user/<int:user_id>/', DeleteUserAPI.as_view(), name='api_delete_user'),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
