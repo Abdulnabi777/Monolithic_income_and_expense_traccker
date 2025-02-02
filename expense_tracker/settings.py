@@ -1,25 +1,22 @@
 from pathlib import Path
-import dj_database_url
 import os
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*ep3fwilxz+zs)3bgao@ed5yj$456%3o8g%@pj7s6*i!$$bh3w'
+SECRET_KEY = os.environ.get("SECRET_KEY", "default-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['.vercel.app','127.0.0.1','.now.sh','localhost']
-
-
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,12 +27,10 @@ INSTALLED_APPS = [
     'rest_framework',  # Add this
     'users',
     'rest_framework.authtoken',
-    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -43,6 +38,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 ROOT_URLCONF = 'expense_tracker.urls'
 
 TEMPLATES = [
@@ -61,7 +57,7 @@ TEMPLATES = [
     },
 ]
 
-
+WSGI_APPLICATION = 'expense_tracker.wsgi.application'
 
 
 # Database
@@ -75,32 +71,11 @@ TEMPLATES = [
     
  
 # }
-
+database_url = os.environ.get("DATABASE_URL")
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DB_NAME', 'railway'),
-        'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'tHxJInQGYtJPQfoJsHTFPOjefuNnsAcP'),
-        'PORT': os.getenv('DB_PORT', '12353'),
-        'HOST': os.getenv('DB_HOST', 'roundhouse.proxy.rlwy.net'),
-    }
+    'default': dj_database_url.parse(database_url)
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': 'tHxJInQGYtJPQfoJsHTFPOjefuNnsAcP',
-#         'PORT': '12353',
-#         'HOST': 'roundhouse.proxy.rlwy.net'
-#     }
-# }
 
-# database_url = os.environ.get("DATABASE_URL")
-# DATABASES = {
-#     'default': dj_database_url.parse(database_url)
-# }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -135,19 +110,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# STATIC & MEDIA FILES SETTINGS
+STATIC_URL = 'static/'
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-
-MEDIA_URLS ='/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# WSGI APPLICATION
-WSGI_APPLICATION = 'expense_tracker.wsgi.application'
-
-#dbd
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
