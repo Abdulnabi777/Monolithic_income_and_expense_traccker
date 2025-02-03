@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     'rest_framework',  # Add this
     'users',
     'rest_framework.authtoken',
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -110,12 +112,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+# Static files settings
+STATIC_URL = '/static/'  # Ensure this has a leading slash
 
+# Directory where `collectstatic` will store files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Additional static files directories (if needed)
 STATICFILES_DIRS = [
-    BASE_DIR / 'users' / 'static',  # Add this for the users app
+    BASE_DIR / 'users' / 'static',  # Ensure this exists
 ]
 
+# WhiteNoise for serving static files efficiently in production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files (for user uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
