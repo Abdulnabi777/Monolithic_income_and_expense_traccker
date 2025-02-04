@@ -1,5 +1,5 @@
 from django.urls import path
-from .userviews import signup_page, login_page, home_page, logout_page, home1_page, report_view
+from .userviews import signup_page, login_page, home_page, logout_page, home1_page, report_view,  password_reset_page
 from .apiuserviews import SignupAPI, LoginAPI, LogoutAPI, UserHomeRedirectAPI
 from .expenseview import add_expense, view_expenses, edit_expense, delete_expense, set_limits
 from .income import add_income, view_incomes, edit_income, delete_income
@@ -43,6 +43,7 @@ urlpatterns = [
     path('home/', home_page, name='home'),
     path('report/', report_view, name='report'),
     path('logout/', logout_page, name='logout'),
+    path('password_reset/', password_reset_page, name='password_reset'),
 
     # Web user expense
     path('view-expenses/', view_expenses, name='view_expenses'),

@@ -53,6 +53,25 @@ def login_page(request):
     
     return render(request, 'login.html')
 
+def logout_page(request):
+    logout(request)
+    return redirect('login') 
+ 
+def password_reset_page(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        new_password = request.POST.get('new_password')
+
+        try:
+            user = User.objects.get(username=username)
+            user.set_password(new_password)  # Reset the password
+            user.save()
+            return redirect('login')  # Redirect to login after reset
+        except User.DoesNotExist:
+            return render(request, 'password_reset.html', {'error': 'User does not exist'})
+
+    return render(request, 'password_reset.html')
+
 @staff_member_required  # Ensures only admin users can access this view
 def home1_page(request):
     return render(request, 'home1.html') 
@@ -118,7 +137,4 @@ def home_page(request):
     # Pass the expenses to the template
     return render(request, 'home.html', {'expenses': expenses})
 
-def logout_page(request):
-    logout(request)
-    return redirect('login') 
  
